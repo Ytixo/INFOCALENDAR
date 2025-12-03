@@ -1,12 +1,12 @@
         // --- 1. CONFIGURATION DU CONTENU (Ajoutez vos chemins ici) ---
        // --- 1. CONFIGURATION DU CONTENU (Ajoutez vos chemins ici) ---
+// --- 1. CONFIGURATION DU CONTENU (Ajoutez vos chemins ici) ---
 const doorContents = [
     {
         day: 1,
-        type: 'text', 
-        // CORRECTION: Ajout de class="language-python" pour la coloration syntaxique
-        // L'ajout de <pre class="..."> permet à Prism de colorer le contenu brut
-        content: `<pre class="language-python">
+        type: 'code', // <-- Changement
+        content: `
+<pre class="language-python"><code class="language-python">
 def evaluer_clause(clause, list_var):
     if len(clause) == 0:
         return False
@@ -28,12 +28,13 @@ def evaluer_clause(clause, list_var):
         return None
         
     return False
-</pre>`
+</code></pre>`
     },
     { 
         day: 2, 
-        type: 'text',
-        content: `<pre class="language-python">
+        type: 'code', // <-- Changement
+        content: `
+<pre class="language-python"><code class="language-python">
 def evaluer_cnf(formule,list_var):
     none = False
 
@@ -44,12 +45,13 @@ def evaluer_cnf(formule,list_var):
             if evaluer_clause(clause,list_var) == None:
                 return None
     return True
-</pre>`
+</code></pre>`
     },
     { 
         day: 3, 
-        type: 'text',
-        content: `<pre class="language-python">
+        type: 'code', // <-- Changement
+        content: `
+<pre class="language-python"><code class="language-python">
 def determine_valuations(list_var):
     if None not in list_var:
         return [list_var]
@@ -62,12 +64,13 @@ def determine_valuations(list_var):
             false[i] = False
             break
     return determine_valuations(true) + determine_valuations(false)
-</pre>` 
+</code></pre>` 
     },
     { 
         day: 4, 
-        type: 'text',
-        content: `<pre class="language-python">
+        type: 'code', // <-- Changement
+        content: `
+<pre class="language-python"><code class="language-python">
 def enlever_litt_for(formule,litteral):
     nouvelle_formule = []
 
@@ -83,12 +86,13 @@ def enlever_litt_for(formule,litteral):
         if not supprimer_clause :
             nouvelle_formule.append(nouvelle_clause)
     return nouvelle_formule
-</pre>` 
+</code></pre>` 
     },
     { 
         day: 5, 
-        type: 'text',
-        content: `<pre class="language-python">
+        type: 'code', // <-- Changement
+        content: `
+<pre class="language-python"><code class="language-python">
 def init_formule_simpl_for(formule_init,list_var):
     for i in range(len(list_var)) :
         if list_var[i] == False :
@@ -96,12 +100,11 @@ def init_formule_simpl_for(formule_init,list_var):
         elif list_var[i] == True:
             formule_init = enlever_litt_for(formule_init, (i+1))
     return formule_init
-</pre>` 
+</code></pre>` 
     },
     { 
         day: 6, 
         type: 'img', 
-        // Le chemin de l'image est conservé comme demandé dans le message précédent
         src: 'assets/20251014_150019.jpg',
         alt: 'Image du Jour 6', 
         caption: 'Cbien lheskuel' 
