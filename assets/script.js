@@ -80,6 +80,12 @@ def init_formule_simpl_for(formule_init,list_var):
             formule_init = enlever_litt_for(formule_init, (i+1))
     return formule_init
 ` },
+{ 
+        day: 6, 
+        type: 'image',
+        // 'content' 
+        content: '/20251014_150019.jpg'
+    },
 
             { day: 24, type: 'text', content: 'Joyeux Noël ! 🎁💻' }
         ];
