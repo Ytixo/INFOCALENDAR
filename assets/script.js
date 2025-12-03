@@ -29,7 +29,7 @@ def evaluer_clause(clause, list_var):
 `
     },
             { day: 2, type: 'code', language : 'python', content: `
-            def evaluer_cnf(formule,list_var):
+def evaluer_cnf(formule,list_var):
     none = False
 
     for clause in formule: 
@@ -40,8 +40,20 @@ def evaluer_clause(clause, list_var):
                 return None
     return True
     `},
-            { day: 3, type: 'text', content: 'N\'oublie pas ton git commit aujourd\'hui !' },
-            // ... Remplissez jusqu'à 24
+            { day: 3, type: 'code', language: 'python', content: `
+def determine_valuations(list_var):
+    if None not in list_var:
+        return [list_var]
+    true = list_var.copy()
+    false = list_var.copy()
+
+    for i in range(len(list_var)):
+        if list_var[i] == None:
+            true[i] = True
+            false[i] = False
+            break
+    return determine_valuations(true) + determine_valuations(false)
+` },
             { day: 24, type: 'text', content: 'Joyeux Noël ! 🎁💻' }
         ];
 
