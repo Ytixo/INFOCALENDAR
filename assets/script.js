@@ -1,6 +1,33 @@
         // --- 1. CONFIGURATION DU CONTENU (Ajoutez vos chemins ici) ---
         const doorContents = [
-            { day: 1, type: 'text', content: 'Hello World! C\'est parti pour Décembre.' },
+            {
+        day: 1,
+        type: 'code', // <-- Changez le type de 'text' à 'code'
+        language: 'python', // <-- Ajoutez la langue
+        content: `
+def evaluer_clause(clause, list_var):
+    if len(clause) == 0:
+        return False
+    none = False
+    for i in clause:
+        val = list_var[abs(i) - 1] 
+
+        if val == None:
+            none = True
+            continue
+        
+        if i < 0:
+            val = not val
+        
+        if val == True:
+            return True
+            
+    if none:
+        return None
+        
+    return False
+`
+    },
             { day: 2, type: 'img', src: 'media/meme_dev.jpg', alt: 'Meme Dev', caption: 'Quand le code compile du premier coup.' },
             { day: 3, type: 'text', content: 'N\'oublie pas ton git commit aujourd\'hui !' },
             // ... Remplissez jusqu'à 24
@@ -251,7 +278,16 @@
                     modalBody.innerHTML = `<img src="${content.src}" alt="Noel"><p>${content.caption || ''}</p>`;
                 } else if (content.type === 'video') {
                     modalBody.innerHTML = `<video controls autoplay><source src="${content.src}" type="video/mp4"></video><p>${content.caption || ''}</p>`;
+                } else if (content.type === 'code') { // <-- NOUVELLE LOGIQUE POUR LE CODE
+                    modalBody.innerHTML = `
+                        <pre style="text-align: left; margin: 15px 0;">
+                            <code class="language-${content.language}">${content.content}</code>
+                        </pre>
+                    `;
+                    // Force la coloration du nouveau contenu
+                    hljs.highlightAll(); 
                 } else {
+                    // Type 'text' par défaut (votre logique actuelle)
                     modalBody.innerHTML = `<p style="font-size:1.2em; border-left: 3px solid var(--neon-green); padding-left:10px;">${content.content}</p>`;
                 }
             }
