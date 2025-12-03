@@ -101,7 +101,7 @@ def init_formule_simpl_for(formule_init,list_var):
         // CORRECTION DU CHEMIN D'ACCÈS
         src: 'assets/20251014_150019.jpg',
         alt: 'Image du Jour 6', 
-        caption: 'Votre image pour le jour 6.' 
+        caption: 'Cbien lheskuel' 
     },
     
     { day: 24, type: 'text', content: 'Joyeux Noël ! 🎁💻' }
