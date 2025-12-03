@@ -54,6 +54,33 @@ def determine_valuations(list_var):
             break
     return determine_valuations(true) + determine_valuations(false)
 ` },
+{ day: 4, type: 'code', language: 'python', content: `
+def enlever_litt_for(formule,litteral):
+    nouvelle_formule = []
+
+    for clause in formule :
+        nouvelle_clause = []
+        supprimer_clause = False
+
+        for e in clause :
+            if e == litteral :
+                supprimer_clause = True
+            elif e != -litteral :
+                nouvelle_clause.append(e)
+        if not supprimer_clause :
+            nouvelle_formule.append(nouvelle_clause)
+    return nouvelle_formule
+` },
+{ day: 5, type: 'code', language: 'python', content: `
+def init_formule_simpl_for(formule_init,list_var):
+    for i in range(len(list_var)) :
+        if list_var[i] == False :
+            formule_init = enlever_litt_for(formule_init, -(i+1))
+        elif list_var[i] == True:
+            formule_init = enlever_litt_for(formule_init, (i+1))
+    return formule_init
+` },
+
             { day: 24, type: 'text', content: 'Joyeux Noël ! 🎁💻' }
         ];
 
