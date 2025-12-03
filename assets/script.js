@@ -2,10 +2,8 @@
        const doorContents = [
     {
         day: 1,
-        // CHANGÉ : 'code' n'est pas supporté, utilisez 'text' pour l'affichage brut.
         type: 'text', 
-        // Supprimé 'language' qui n'est pas supporté
-        content: `
+        content: `<pre>
 def evaluer_clause(clause, list_var):
     if len(clause) == 0:
         return False
@@ -27,12 +25,12 @@ def evaluer_clause(clause, list_var):
         return None
         
     return False
-`
+</pre>`
     },
     { 
         day: 2, 
-        type: 'text', // CHANGÉ : 'code' -> 'text'
-        content: `
+        type: 'text',
+        content: `<pre>
 def evaluer_cnf(formule,list_var):
     none = False
 
@@ -43,12 +41,12 @@ def evaluer_cnf(formule,list_var):
             if evaluer_clause(clause,list_var) == None:
                 return None
     return True
-    `
+</pre>`
     },
     { 
         day: 3, 
-        type: 'text', // CHANGÉ : 'code' -> 'text'
-        content: `
+        type: 'text',
+        content: `<pre>
 def determine_valuations(list_var):
     if None not in list_var:
         return [list_var]
@@ -61,12 +59,12 @@ def determine_valuations(list_var):
             false[i] = False
             break
     return determine_valuations(true) + determine_valuations(false)
-` 
+</pre>` 
     },
     { 
         day: 4, 
-        type: 'text', // CHANGÉ : 'code' -> 'text'
-        content: `
+        type: 'text',
+        content: `<pre>
 def enlever_litt_for(formule,litteral):
     nouvelle_formule = []
 
@@ -82,12 +80,12 @@ def enlever_litt_for(formule,litteral):
         if not supprimer_clause :
             nouvelle_formule.append(nouvelle_clause)
     return nouvelle_formule
-` 
+</pre>` 
     },
     { 
         day: 5, 
-        type: 'text', // CHANGÉ : 'code' -> 'text'
-        content: `
+        type: 'text',
+        content: `<pre>
 def init_formule_simpl_for(formule_init,list_var):
     for i in range(len(list_var)) :
         if list_var[i] == False :
@@ -95,20 +93,19 @@ def init_formule_simpl_for(formule_init,list_var):
         elif list_var[i] == True:
             formule_init = enlever_litt_for(formule_init, (i+1))
     return formule_init
-` 
+</pre>` 
     },
     { 
         day: 6, 
-        type: 'img', // CORRIGÉ : utilise 'img' pour correspondre à la fonction
-        // CORRIGÉ : utilise 'src' pour le chemin d'accès à l'image
-        src: '/20251014_150019.jpg',
-        alt: 'Image du Jour 6', // Ajout d'un alt pour la bonne pratique
-        caption: 'Votre image pour le jour 6.' // Ajout d'une légende
+        type: 'img', 
+        // CORRECTION DU CHEMIN D'ACCÈS
+        src: 'assets/20251014_150019.jpg',
+        alt: 'Image du Jour 6', 
+        caption: 'Votre image pour le jour 6.' 
     },
     
     { day: 24, type: 'text', content: 'Joyeux Noël ! 🎁💻' }
 ];
-
         // --- 2. CONFIGURATION DES BLAGUES (TYPEWRITER) ---
         // Variable corrigée en "jokes" (minuscule) et syntaxe corrigée
         const jokes = [
