@@ -218,3 +218,27 @@
             border: 1px solid #555;
             margin-top: 15px;
         }
+        /* --- 8. STYLE HIGHLIGHT.JS DANS LA MODALE --- */
+
+/* --- 8. STYLE HIGHLIGHT.JS DANS LA MODALE --- */
+
+.modal-content pre {
+    /* Ajout de la hauteur maximale et du défilement */
+    max-height: 400px; /* Ajustez cette valeur si nécessaire */
+    overflow-y: auto;  /* Permet le défilement vertical */
+    border-radius: 8px;
+    padding: 0; /* Enlève le padding du PRE, on le met sur le CODE */
+}
+
+.modal-content pre code {
+    /* Ces styles sont appliqués au code lui-même */
+    font-family: 'Fira Code', monospace; 
+    font-size: 0.9em;
+    line-height: 1.4;
+    white-space: pre-wrap; 
+    word-wrap: break-word;
+    display: block; 
+    padding: 15px; /* Le padding se fait sur le code, pas le pre */
+    /* La couleur de fond est gérée par le thème monokai de highlight.js */
+}
+/* ... le reste de votre CSS */
