@@ -1,9 +1,12 @@
         // --- 1. CONFIGURATION DU CONTENU (Ajoutez vos chemins ici) ---
-       const doorContents = [
+       // --- 1. CONFIGURATION DU CONTENU (Ajoutez vos chemins ici) ---
+const doorContents = [
     {
         day: 1,
         type: 'text', 
-        content: `<pre>
+        // CORRECTION: Ajout de class="language-python" pour la coloration syntaxique
+        // L'ajout de <pre class="..."> permet à Prism de colorer le contenu brut
+        content: `<pre class="language-python">
 def evaluer_clause(clause, list_var):
     if len(clause) == 0:
         return False
@@ -30,7 +33,7 @@ def evaluer_clause(clause, list_var):
     { 
         day: 2, 
         type: 'text',
-        content: `<pre>
+        content: `<pre class="language-python">
 def evaluer_cnf(formule,list_var):
     none = False
 
@@ -46,7 +49,7 @@ def evaluer_cnf(formule,list_var):
     { 
         day: 3, 
         type: 'text',
-        content: `<pre>
+        content: `<pre class="language-python">
 def determine_valuations(list_var):
     if None not in list_var:
         return [list_var]
@@ -64,7 +67,7 @@ def determine_valuations(list_var):
     { 
         day: 4, 
         type: 'text',
-        content: `<pre>
+        content: `<pre class="language-python">
 def enlever_litt_for(formule,litteral):
     nouvelle_formule = []
 
@@ -85,7 +88,7 @@ def enlever_litt_for(formule,litteral):
     { 
         day: 5, 
         type: 'text',
-        content: `<pre>
+        content: `<pre class="language-python">
 def init_formule_simpl_for(formule_init,list_var):
     for i in range(len(list_var)) :
         if list_var[i] == False :
@@ -98,7 +101,7 @@ def init_formule_simpl_for(formule_init,list_var):
     { 
         day: 6, 
         type: 'img', 
-        // CORRECTION DU CHEMIN D'ACCÈS
+        // Le chemin de l'image est conservé comme demandé dans le message précédent
         src: 'assets/20251014_150019.jpg',
         alt: 'Image du Jour 6', 
         caption: 'Cbien lheskuel' 
@@ -106,6 +109,7 @@ def init_formule_simpl_for(formule_init,list_var):
     
     { day: 24, type: 'text', content: 'Joyeux Noël ! 🎁💻' }
 ];
+
         // --- 2. CONFIGURATION DES BLAGUES (TYPEWRITER) ---
         // Variable corrigée en "jokes" (minuscule) et syntaxe corrigée
         const jokes = [
