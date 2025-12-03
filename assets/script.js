@@ -28,7 +28,18 @@ def evaluer_clause(clause, list_var):
     return False
 `
     },
-            { day: 2, type: 'img', src: 'media/meme_dev.jpg', alt: 'Meme Dev', caption: 'Quand le code compile du premier coup.' },
+            { day: 2, type: 'code', language : 'python', content: `
+            def evaluer_cnf(formule,list_var):
+    none = False
+
+    for clause in formule: 
+        if evaluer_clause(clause,list_var) == False:
+            return False
+        else :
+            if evaluer_clause(clause,list_var) == None:
+                return None
+    return True
+    `},
             { day: 3, type: 'text', content: 'N\'oublie pas ton git commit aujourd\'hui !' },
             // ... Remplissez jusqu'à 24
             { day: 24, type: 'text', content: 'Joyeux Noël ! 🎁💻' }
