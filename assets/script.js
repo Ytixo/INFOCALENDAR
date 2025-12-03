@@ -1,9 +1,10 @@
         // --- 1. CONFIGURATION DU CONTENU (Ajoutez vos chemins ici) ---
-        const doorContents = [
-            {
+       const doorContents = [
+    {
         day: 1,
-        type: 'code', // <-- Changez le type de 'text' à 'code'
-        language: 'python', // <-- Ajoutez la langue
+        // CHANGÉ : 'code' n'est pas supporté, utilisez 'text' pour l'affichage brut.
+        type: 'text', 
+        // Supprimé 'language' qui n'est pas supporté
         content: `
 def evaluer_clause(clause, list_var):
     if len(clause) == 0:
@@ -28,7 +29,10 @@ def evaluer_clause(clause, list_var):
     return False
 `
     },
-            { day: 2, type: 'code', language : 'python', content: `
+    { 
+        day: 2, 
+        type: 'text', // CHANGÉ : 'code' -> 'text'
+        content: `
 def evaluer_cnf(formule,list_var):
     none = False
 
@@ -39,8 +43,12 @@ def evaluer_cnf(formule,list_var):
             if evaluer_clause(clause,list_var) == None:
                 return None
     return True
-    `},
-            { day: 3, type: 'code', language: 'python', content: `
+    `
+    },
+    { 
+        day: 3, 
+        type: 'text', // CHANGÉ : 'code' -> 'text'
+        content: `
 def determine_valuations(list_var):
     if None not in list_var:
         return [list_var]
@@ -53,8 +61,12 @@ def determine_valuations(list_var):
             false[i] = False
             break
     return determine_valuations(true) + determine_valuations(false)
-` },
-{ day: 4, type: 'code', language: 'python', content: `
+` 
+    },
+    { 
+        day: 4, 
+        type: 'text', // CHANGÉ : 'code' -> 'text'
+        content: `
 def enlever_litt_for(formule,litteral):
     nouvelle_formule = []
 
@@ -70,8 +82,12 @@ def enlever_litt_for(formule,litteral):
         if not supprimer_clause :
             nouvelle_formule.append(nouvelle_clause)
     return nouvelle_formule
-` },
-{ day: 5, type: 'code', language: 'python', content: `
+` 
+    },
+    { 
+        day: 5, 
+        type: 'text', // CHANGÉ : 'code' -> 'text'
+        content: `
 def init_formule_simpl_for(formule_init,list_var):
     for i in range(len(list_var)) :
         if list_var[i] == False :
@@ -79,16 +95,19 @@ def init_formule_simpl_for(formule_init,list_var):
         elif list_var[i] == True:
             formule_init = enlever_litt_for(formule_init, (i+1))
     return formule_init
-` },
-{ 
-        day: 6, 
-        type: 'image',
-        // 'content' 
-        content: '/20251014_150019.jpg'
+` 
     },
-
-            { day: 24, type: 'text', content: 'Joyeux Noël ! 🎁💻' }
-        ];
+    { 
+        day: 6, 
+        type: 'img', // CORRIGÉ : utilise 'img' pour correspondre à la fonction
+        // CORRIGÉ : utilise 'src' pour le chemin d'accès à l'image
+        src: '/20251014_150019.jpg',
+        alt: 'Image du Jour 6', // Ajout d'un alt pour la bonne pratique
+        caption: 'Votre image pour le jour 6.' // Ajout d'une légende
+    },
+    
+    { day: 24, type: 'text', content: 'Joyeux Noël ! 🎁💻' }
+];
 
         // --- 2. CONFIGURATION DES BLAGUES (TYPEWRITER) ---
         // Variable corrigée en "jokes" (minuscule) et syntaxe corrigée
