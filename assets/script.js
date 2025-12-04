@@ -109,7 +109,14 @@ def init_formule_simpl_for(formule_init,list_var):
         alt: 'Image du Jour 6', 
         caption: 'Cbien lheskuel' 
     },
-    
+    { day: 7, type: 'text', content: 'PAS DE FICHIER PARTAGERRRRRRRRRRRRRRRRRRRRRRRRRR' },
+    { 
+        day: 8, 
+        type: 'img', 
+        src: 'assets/steal.jpg',
+        alt: 'Image du Jour 8', 
+        caption: 'Who is the owner of this code' 
+    },
     { day: 24, type: 'text', content: 'Joyeux Noël ! 🎁💻' }
 ];
 
