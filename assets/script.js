@@ -1,6 +1,7 @@
 // assets/script.js
 
 // --- 1. CONFIGURATION DU CONTENU (Ajoutez vos chemins ici) ---
+// --- 1. CONFIGURATION DU CONTENU (Ajoutez vos chemins ici) ---
 const doorContents = [
     {
         day: 1,
@@ -116,6 +117,279 @@ def init_formule_simpl_for(formule_init,list_var):
         src: 'assets/steal.jpg',
         alt: 'Image du Jour 8', 
         caption: 'Who is the owner of this code' 
+    },
+    { 
+        day: 9, 
+        type: 'fact', 
+        content: 'Le premier langage de programmation "haut niveau" jamais conçu était le **Plankalkül**, créé par Konrad Zuse entre 1942 et 1945, bien qu\'il n\'ait été publié qu\'en 1972.'
+    },
+    { 
+        day: 10, 
+        type: 'code', 
+        content: `
+<pre><code class="language-python">
+def dpll(formule, list_var):
+    # Simplification de l'initialisation
+    formule = init_formule_simpl_for(formule, list_var)
+
+    # Vérification : Formule vide (satisfiable)
+    if len(formule) == 0:
+        return True, list_var
+
+    # Vérification : Clause vide (insatisfiable)
+    if any(len(clause) == 0 for clause in formule):
+        return False, None
+
+    # Choisir un littéral non assigné (heuristique simple : le premier littéral dans la première clause non vide)
+    litteral_choisi = None
+    for clause in formule:
+        if len(clause) > 0:
+            # On prend la variable associée au premier littéral
+            var_index = abs(clause[0]) - 1
+            if list_var[var_index] == None:
+                litteral_choisi = clause[0]
+                break
+    
+    # Si aucun littéral non assigné n'est trouvé, la formule est True (déjà géré par la vérification formule vide si la liste de variables est complète)
+    if litteral_choisi is None:
+         # Double vérification finale avec évaluation complète (seulement pour la robustesse)
+         if evaluer_cnf(formule, list_var) == True:
+            return True, list_var
+         else:
+            return False, None # Ne devrait pas arriver si les étapes sont correctes
+            
+    var_index = abs(litteral_choisi) - 1
+    
+    # Cas 1 : Assignation à True (choix du littéral choisi)
+    list_var_true = list_var[:]
+    list_var_true[var_index] = (litteral_choisi > 0) 
+    
+    sat_true, sol_true = dpll(formule, list_var_true)
+    if sat_true:
+        return True, sol_true
+
+    # Cas 2 : Assignation à False (choix du littéral opposé)
+    list_var_false = list_var[:]
+    list_var_false[var_index] = (litteral_choisi < 0) 
+    
+    sat_false, sol_false = dpll(formule, list_var_false)
+    if sat_false:
+        return True, sol_false
+
+    # Les deux branches ont échoué
+    return False, None
+</code></pre>` 
+    },
+    { 
+        day: 11, 
+        type: 'fact', 
+        content: 'Le premier **virus informatique** non expérimental était **Elk Cloner**, créé en 1982 par un lycéen de 15 ans. Il infectait les disquettes Apple II et affichait un petit poème.'
+    },
+    { 
+        day: 12, 
+        type: 'img', 
+        src: 'https://i.imgflip.com/6r11r.jpg', // Exemple de lien de meme
+        alt: 'Meme de développeur stressé', 
+        caption: 'Quand j\'évalue une clause et qu\'elle retourne None : **Guess I\'ll die**' 
+    },
+    { 
+        day: 13, 
+        type: 'code', 
+        content: `
+<pre><code class="language-python">
+# Fonction utilitaire pour trouver les littéraux unitaires
+def trouver_litteraux_unitaires(formule, list_var):
+    unitaires = []
+    for clause in formule:
+        if len(clause) == 1:
+            litteral = clause[0]
+            var_index = abs(litteral) - 1
+            if list_var[var_index] == None:
+                unitaires.append(litteral)
+    return unitaires
+</code></pre>`
+    },
+    { 
+        day: 14, 
+        type: 'fact', 
+        content: 'Le terme **"bug"** pour désigner une erreur de programmation serait inspiré d\'un véritable insecte. En 1947, un papillon de nuit fut trouvé coincé dans un relais du calculateur **Mark II** à Harvard, provoquant une panne.'
+    },
+    { 
+        day: 15, 
+        type: 'img', 
+        src: 'https://i.imgflip.com/7123o.jpg', // Exemple de lien de meme
+        alt: 'Meme de chat en colère pour un bug', 
+        caption: 'Moi après avoir passé 3 heures à débugger une fonction que j\'ai écrite en 5 minutes.' 
+    },
+    { 
+        day: 16, 
+        type: 'code', 
+        content: `
+<pre><code class="language-python">
+# Simplification des clauses unitaires (règle d'Unité)
+def regle_unite_dpll(formule, list_var):
+    while True:
+        unitaires = trouver_litteraux_unitaires(formule, list_var)
+        if not unitaires:
+            break
+            
+        litteral_unitaire = unitaires[0]
+        var_index = abs(litteral_unitaire) - 1
+        
+        # Le littéral unitaire doit être assigné pour satisfaire la clause
+        list_var[var_index] = (litteral_unitaire > 0)
+        
+        # Mettre à jour la formule avec la nouvelle assignation
+        formule = init_formule_simpl_for(formule, list_var)
+        
+        # Vérification après simplification
+        if any(len(clause) == 0 for clause in formule):
+            return False, None  # Clause vide, insatisfiable
+        if len(formule) == 0:
+            return True, list_var # Formule vide, satisfiable
+            
+    return formule, list_var # Retourne la formule et les variables mises à jour
+
+# Modification de la fonction dpll pour utiliser la règle d'unité
+def dpll_avec_unite(formule, list_var):
+    # Règle d'Unité (propagation de contrainte)
+    result_unite = regle_unite_dpll(formule, list_var)
+    if isinstance(result_unite[0], bool): # Si la règle d'unité a déjà trouvé la solution
+        return result_unite
+        
+    formule, list_var = result_unite
+    
+    # ... Reste de la fonction dpll (vérifications de base et branchement)
+    # Vérification : Formule vide (satisfiable)
+    if len(formule) == 0:
+        return True, list_var
+
+    # Vérification : Clause vide (insatisfiable)
+    if any(len(clause) == 0 for clause in formule):
+        return False, None
+    
+    # Choisir un littéral non assigné... (comme dans la fonction dpll précédente)
+    litteral_choisi = None
+    for clause in formule:
+        if len(clause) > 0:
+            var_index = abs(clause[0]) - 1
+            if list_var[var_index] == None:
+                litteral_choisi = clause[0]
+                break
+                
+    if litteral_choisi is None:
+        # La formule est satisfiable car elle est vide ou toutes les variables sont assignées et satisfaites
+        return True, list_var 
+            
+    var_index = abs(litteral_choisi) - 1
+    
+    # Cas 1 : Assignation à True
+    list_var_true = list_var[:]
+    list_var_true[var_index] = (litteral_choisi > 0) 
+    sat_true, sol_true = dpll_avec_unite(formule, list_var_true)
+    if sat_true:
+        return True, sol_true
+
+    # Cas 2 : Assignation à False
+    list_var_false = list_var[:]
+    list_var_false[var_index] = (litteral_choisi < 0) 
+    sat_false, sol_false = dpll_avec_unite(formule, list_var_false)
+    if sat_false:
+        return True, sol_false
+
+    return False, None
+</code></pre>` 
+    },
+    { 
+        day: 17, 
+        type: 'fact', 
+        content: 'La toute première adresse électronique (email) a été envoyée par **Ray Tomlinson** en 1971. C\'est lui qui a choisi le caractère **"@"** pour séparer le nom de l\'utilisateur de celui de la machine hôte.'
+    },
+    { 
+        day: 18, 
+        type: 'img', 
+        src: 'https://i.imgflip.com/5l3o7d.png', // Exemple de lien de meme
+        alt: 'Meme "Ça ne marche pas" vs "Ça ne compile pas"', 
+        caption: 'Moi : *le code compile et s\'exécute*... Le code en production : **Ça ne marche pas, mais je ne sais pas pourquoi.**' 
+    },
+    { 
+        day: 19, 
+        type: 'code', 
+        content: `
+<pre><code class="language-python">
+# Fonction utilitaire pour trouver les littéraux purs
+def trouver_litteraux_purs(formule, list_var):
+    toutes_apparitions = {}
+    
+    for clause in formule:
+        for litteral in clause:
+            var = abs(litteral)
+            # S'assurer que la variable n'est pas déjà assignée
+            if list_var[var - 1] == None:
+                if var not in toutes_apparitions:
+                    toutes_apparitions[var] = 0
+                
+                if litteral > 0: # Apparition positive
+                    toutes_apparitions[var] |= 1 # Mettre le premier bit à 1
+                else: # Apparition négative
+                    toutes_apparitions[var] |= 2 # Mettre le deuxième bit à 1
+
+    littéraux_purs = []
+    for var, apparitions in toutes_apparitions.items():
+        if apparitions == 1: # Uniquement apparitions positives
+            littéraux_purs.append(var) # Assigner à True
+        elif apparitions == 2: # Uniquement apparitions négatives
+            littéraux_purs.append(-var) # Assigner à False
+            
+    return littéraux_purs
+</code></pre>`
+    },
+    { 
+        day: 20, 
+        type: 'fact', 
+        content: 'Un ordinateur a besoin de 4 Go de mémoire pour pouvoir gérer la simulation complète d\'une cellule cérébrale d\'une seule seconde. Le cerveau humain contient environ **86 milliards** de neurones.'
+    },
+    { 
+        day: 21, 
+        type: 'img', 
+        src: 'https://i.imgflip.com/4l35m.jpg', // Exemple de lien de meme
+        alt: 'Meme de programmeur qui regarde ses notes', 
+        caption: 'Mon code après une nuit blanche vs mes notes pour le comprendre le lendemain.' 
+    },
+    { 
+        day: 22, 
+        type: 'code', 
+        content: `
+<pre><code class="language-python">
+# Règle du Littéral Pur
+def regle_litt_pur_dpll(formule, list_var):
+    while True:
+        litteraux_purs = trouver_litteraux_purs(formule, list_var)
+        if not litteraux_purs:
+            break
+            
+        litteral_pur = litteraux_purs[0]
+        var_index = abs(litteral_pur) - 1
+        
+        # Le littéral pur est assigné pour le retirer de la formule sans risque
+        list_var[var_index] = (litteral_pur > 0)
+        
+        # Mettre à jour la formule avec la nouvelle assignation
+        formule = init_formule_simpl_for(formule, list_var)
+        
+        # Vérification après simplification
+        if any(len(clause) == 0 for clause in formule):
+            return False, None  # Clause vide, insatisfiable
+        if len(formule) == 0:
+            return True, list_var # Formule vide, satisfiable
+            
+    return formule, list_var # Retourne la formule et les variables mises à jour
+</code></pre>` 
+    },
+    { 
+        day: 23, 
+        type: 'fact', 
+        content: 'La puissance de calcul de votre smartphone est probablement supérieure à celle utilisée pour envoyer les astronautes sur la Lune avec la mission **Apollo 11**.'
     },
     { day: 24, type: 'text', content: 'Joyeux Noël ! 🎁💻' }
 ];
